@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ධම්හිරු රංගායතනය - නව පිටුව</title>
+    <style>
+        :root {
+            --bg: #0f0f12;
+            --card-bg: #1a1a24;
+            --accent: #ffb703;
+            --text: #f1f1f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 2rem;
+        }
+
+        /* Top Toolbar Styles */
+        .toolbar {
+            background-color: #14141d;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .left-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar-title {
+            color: var(--text);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hamburger Menu Button */
+        .menu-btn {
+            font-size: 26px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            margin-right: 18px;
+            transition: transform 0.2s ease, color 0.2s ease;
+            line-height: 1;
+        }
+
+        .menu-btn:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        /* Language Selector Dropdown */
+        .lang-select {
+            background-color: var(--card-bg);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .lang-select option {
+            background-color: #14141d;
+            color: var(--text);
+        }
+
+        /* Side Drawer Menu */
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 270px;
+            height: 100%;
+            background-color: #14141d;
+            border-right: 2px solid var(--accent);
+            box-shadow: 5px 0 25px rgba(255, 183, 3, 0.2);
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            padding-top: 80px;
+        }
+
+        .drawer.open {
+            left: 0;
+        }
+
+        /* Menu Links */
+        .drawer a {
+            display: flex;
+            align-items: center;
+            padding: 16px 30px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-left: 4px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .drawer a:hover {
+            background-color: #1e1e2c;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 38px;
+        }
+
+        /* Background Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Main Container for New Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Toolbar -->
+    <div class="toolbar">
+        <div class="left-header">
+            <button class="menu-btn" onclick="toggleDrawer()">&#9776;</button>
+            <span class="toolbar-title" id="t-brand">ධම්හිරු රංගායතනය</span>
+        </div>
+        
+        <!-- Language Switcher -->
+        <div>
+            <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="si">සිංහල</option>
+                <option value="en">English</option>
+                <option value="ta">தமிழ்</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Side Drawer Menu -->
+    <div class="drawer" id="sideDrawer">
+        <a href="Damhiru.html" id="m-home">මුල් පිටුව</a>
+        <a href="Hi1.html" id="m-about">අප පිළිබඳව</a>
+        <a href="#" id="m-inquiries">විමසීම්</a>
+        <a href="#" id="m-whatsapp">Whatsapp</a>
+        <a href="#" id="m-facebook">Facebook</a>
+    </div>
+
+    <!-- Background Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+        <!-- අලුත් පේජ් එකේ අන්තර්ගතයන් සඳහා Sample Texts (මේවාත් Auto-Translate වේ) -->
+        <h2 id="p-title">අප පිළිබඳව</h2>
+        <p id="p-desc" style="margin-top: 15px; color: #a0a0b0;">මෙම පිටුවෙන් අප ආයතනය පිළිබඳ තොරතුරු ලබාගත හැක.</p>
+    </main>
+
+    <!-- Multi-Language Logic with LocalStorage -->
+    <script>
+        // Drawer toggle logic
+        function toggleDrawer() {
+            document.getElementById('sideDrawer').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // Language Translations Data (මෙම පේජ් එකට අදාළ ලිපි)
+        const translations = {
+            si: {
+                brand: "දම්හිරු රංගායතනය",
+                mHome: "මුල් පිටුව",
+                mAbout: "අප පිළිබඳව",
+                mInquiries: "විමසීම්",
+                mWhatsapp: "Whatsapp",
+                mFacebook: "Facebook",
+                // අලුත් පේජ් එකට අදාළ Text
+                pTitle: "අප පිළිබඳව",
+                pDesc: "මෙම පිටුවෙන් අප ආයතනය පිළිබඳ තොරතුරු ලබාගත හැක."
+            },
+            en: {
+                brand: "Damhiru Academy",
+                mHome: "Home",
+                mAbout: "About Us",
+                mInquiries: "Inquiries",
+                mWhatsapp: "Whatsapp",
+                mFacebook: "Facebook",
+                // New Page Text
+                pTitle: "About Us",
+                pDesc: "You can get information about our academy from this page."
+            },
+            ta: {
+                brand: "தம்ஹிரு கலை அகாடமி",
+                mHome: "முகப்பு",
+                mAbout: "எங்களைப் பற்றி",
+                mInquiries: "விசாரணைகள்",
+                mWhatsapp: "Whatsapp",
+                mFacebook: "Facebook",
+                // New Page Text
+                pTitle: "எங்களைப் பற்றி",
+                pDesc: "இந்தப் பக்கத்தில் இருந்து எங்கள் அகாடமி பற்றிய தகவல்களைப் பெறலாம்."
+            }
+        };
+
+        // Function to switch language & Save to LocalStorage
+        function changeLanguage(lang) {
+            // Save selected language to LocalStorage
+            localStorage.setItem('selectedLang', lang);
+
+            const data = translations[lang];
+
+            // Update Toolbar & Drawer
+            document.getElementById('t-brand').innerText = data.brand;
+            document.getElementById('m-home').innerText = data.mHome;
+            document.getElementById('m-about').innerText = data.mAbout;
+            document.getElementById('m-inquiries').innerText = data.mInquiries;
+            document.getElementById('m-whatsapp').innerText = data.mWhatsapp;
+            document.getElementById('m-facebook').innerText = data.mFacebook;
+
+            // Update New Page Contents
+            if(document.getElementById('p-title')) document.getElementById('p-title').innerText = data.pTitle;
+            if(document.getElementById('p-desc')) document.getElementById('p-desc').innerText = data.pDesc;
+            
+            // Sync Dropdown Select element
+            document.getElementById('langSelect').value = lang;
+        }
+
+        // Page load වෙනකොට කලින් තෝරපු Language එක Load කිරීම
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'si'; // Default එක සිංහල
+            changeLanguage(savedLang);
+        });
+    </script>
+
+</body>
+</html>
