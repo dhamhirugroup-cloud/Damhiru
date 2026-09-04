@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+ 
+    <!-- වෙබ් අඩවියේ විස්තරය (Description) -->
+    <meta name="description" content="දම්හිරු වෙබ් අඩවියෙන් අලුත්ම සිංහල සින්දු වල lyrics බලන්න.">
+
+    <!-- සෙවුම් වචන (Keywords) -->
+    <meta name="keywords" content="Damhiru, Sinhala Lyrics, Songs">
+
+    <!-- Social Media වල Share කරද්දී පෙනෙන ආකාරය (Open Graph) -->
+    <meta property="og:title" content="ධම්හිරු">
+    <meta property="og:description" content="සියලුම සංස්කෘතික අංග ">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ධම්හිරු රංගායතනය</title>
+    <style>
+        :root {
+            --bg: #0f0f12;
+            --card-bg: #1a1a24;
+            --accent: #ffb703;
+            --text: #f1f1f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 2rem;
+        }
+
+        /* Top Toolbar Styles */
+        .toolbar {
+            background-color: #14141d;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .left-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar-title {
+            color: var(--text);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hamburger Menu Button */
+        .menu-btn {
+            font-size: 26px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            margin-right: 18px;
+            transition: transform 0.2s ease, color 0.2s ease;
+            line-height: 1;
+        }
+
+        .menu-btn:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        /* Side Drawer Menu */
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 270px;
+            height: 100%;
+            background-color: #14141d;
+            border-right: 2px solid var(--accent);
+            box-shadow: 5px 0 25px rgba(255, 183, 3, 0.2);
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            padding-top: 80px;
+        }
+
+        .drawer.open {
+            left: 0;
+        }
+
+        /* Menu Links */
+        .drawer a {
+            display: flex;
+            align-items: center;
+            padding: 16px 30px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border-left: 4px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .drawer a:hover {
+            background-color: #1e1e2c;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 38px;
+        }
+
+        /* Background Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Original Content Styles */
+        header {
+            text-align: center;
+            margin: 3rem 1rem 3rem 1rem;
+        }
+
+        header h2 {
+            font-size: 2.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #2a2a3a;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(255, 183, 3, 0.1);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #a0a0b0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Toolbar -->
+    <div class="toolbar">
+        <div class="left-header">
+            <button class="menu-btn" onclick="toggleDrawer()">&#9776;</button>
+            <span class="toolbar-title">ධම්හිරු රංගායතනය</span>
+        </div>
+    </div>
+
+    <!-- Side Drawer Menu -->
+    <div class="drawer" id="sideDrawer">
+        <a href="index.html">මුල් පිටුව</a>
+        <a href="About.html">අප පිළිබඳව</a>
+        <a href="Contact.html">විමසීම්</a>
+        <a href="#">Whatsapp</a>
+        <a href="#">Facebook</a>
+    </div>
+
+    <!-- Background Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleDrawer()"></div>
+
+    <!-- Header Content -->
+    <header>
+        <h3 style="color:gold;margin-top:0px;">ධම්හිරු පෞරාණික සංස්කෘතික තක්සලාව</h3>
+        <p style="margin-top:20px;">අපගේ ප්‍රෞඪ අතීතයේ කලාව සොයා යන්න</p>
+        <p style="margin-top:10px;">අප සේවාවන් එකම තැනකින් ඔබට</p>
+    </header>
+
+    <!-- Main Grid Content -->
+    <div class="grid">
+        <!-- Card 1 -->
+        <div class="card">
+            <span class="tag">මංගල උත්සව සදහා සේවාවන්</span>
+            <p>උඩරට, පහතරට සහ සබරගමු සාම්ප්‍රදායික මංගල උත්සව</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <span class="tag">පිරිත් සහ දානමය පිංකම සදහා සේවාවන්</span>
+            <p>පිරිත් මණ්ඩප හා තවත් දෑ...</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <span class="tag">පෙරහැර සදහා නර්තන කණ්ඩායම්</span>
+            <p>වෙස් කණ්ඩායම් හා තවත්...</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+            <span class="tag">කඨින පිංකම් සදහා සේවාවන්</span>
+            <p>ඔබට අවශ්‍ය දෑ...</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card">
+            <span class="tag">දේශිය නර්තන අතිරේක පංති</span>
+            <p>ඕනෑම පෙරදිග නර්තනයක් ශිල්පය අපෙන් ඔබට !</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card">
+            <span class="tag">නිවේදන කටයුතු සහ උපදේශන කටයුතු</span>
+            <p>හිතට දැනෙන නිවේදනයක් අපගෙන් !</p>
+        </div>
+    </div>
+
+    <!-- Menu Toggle Logic -->
+    <script>
+        function toggleDrawer() {
+            document.getElementById('sideDrawer').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+    </script>
+  <center>  <h6><p style="margin-top:10px;margin-left:260px;font-family:'Courier New', Monaco, monospace;">krprojects Decolopmemt<br>©-2026</p></h6>
+      <p style="margin-top:10px;">ABOUT US | PRIVACY POLICY</p>
+
+</body>
+</html>
